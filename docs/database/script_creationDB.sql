@@ -11,17 +11,17 @@ CREATE TABLE whoiswho.users (
 );
 
 CREATE TABLE whoiswho.teachers(
-teacherId INT auto_increment NOT NULL,
-userId int,
-FOREIGN KEY (userId)  REFERENCES whoiswho.users (userid),
-PRIMARY KEY (teacherId)
+	teacherId INT auto_increment NOT NULL,
+	userId int,
+	FOREIGN KEY (userId)  REFERENCES whoiswho.users (userid),
+	PRIMARY KEY (teacherId)
 );
 
 CREATE TABLE whoiswho.students(
-studentId INT auto_increment NOT NULL,
-userId int,
-FOREIGN KEY (userId)  REFERENCES whoiswho.users (userid),
-PRIMARY KEY (studentId)
+	studentId INT auto_increment NOT NULL,
+	userId int,
+	FOREIGN KEY (userId)  REFERENCES whoiswho.users (userid),
+	PRIMARY KEY (studentId)
 );
 
 CREATE TABLE whoiswho.classrooms (
@@ -33,14 +33,61 @@ CREATE TABLE whoiswho.classrooms (
 	PRIMARY KEY(classId)
 );
 
+CREATE TABLE whoiswho.studentsclassroom(
+  	classId int not null,
+   	studentId int not null,
+   	FOREIGN KEY (classId) REFERENCES whoiswho.classrooms(classId),
+   	FOREIGN KEY (studentId) REFERENCES whoiswho.students(studentId),
+	PRIMARY KEY(classId,studentId)
+);
 
- SELECT name,email,password  FROM users u
- left join teacher t on t.userId =u.userId 
- left join students s on s.userId =u.userId 
- WHERE email ='bernat'
+CREATE TABLE whoiswho.exercises(
+	exerciseId int auto_increment NOT NULL,
+	name nvarchar(100) not null,
+	level int not null,
+	description nvarchar(2048),
+	img_tableDiagram varchar(255),
+	db_name varchar(100) not null,
+	db_user varchar(50) not null,
+	db_pass varchar(50)not null,
+	PRIMARY KEY (exerciseId)
+);
 
--- INSERT INTO users (name, email,password) VALUES('bernat','bernat@whoiswhosql.org','dfsfsdfsd')
+CREATE TABLE whoiswho.games(
+	gameId INT AUTO_INCREMENT NOT NULL,
+	pin VARCHAR(10),
+	ExerciseId int not null,
+	start_date DATETIME not null,
+	end_date DATETIME not null,
+	teacherId int,
+	classId int,
+	FOREIGN KEY (ExerciseId) REFERENCES whoiswho.exercises(ExerciseId),
+	FOREIGN KEY (teacherId) REFERENCES whoiswho.teachers(teacherId),
+	FOREIGN KEY (classId) REFERENCES whoiswho.classrooms(classId),
+	PRIMARY KEY(gameId)
+);
+
+
+CREATE TABLE whoiswho.playMoves(
+	gameId INT NOT NULL,
+	studentId INT NOT NULL,
+	query varchar(2048),
+	failed INT NOT NULL,
+	result INT NOT NULL,
+	date DATETIME NOT NULL,
+	FOREIGN KEY (studentId) REFERENCES whoiswho.students(studentId),
+	FOREIGN KEY (gameId) REFERENCES whoiswho.games(gameId),
+	PRIMARY KEY(gameId,studentId)
+);
+
+insert into whoiswho.exercises  (name,level,description,img_tableDiagram,db_name,db_user,db_pass)
+ select 'Classic 1 table',1,'WHERE game in Classic WhoIsWho',
+ 'http://whoiswhosql.com/img/level1tablediagram.jpg','classic1','whoiswholevel1','';
  
-  -- alter table users add column password varchar(100)
--- delete from users
--- SELECT * FROM users where email='bernat@whoiswhosql.org'
+ 
+insert into whoiswho.exercises  (name,level,description,img_tableDiagram,db_name,db_user,db_pass)
+ select 'Classic 2 table',2,'INNERJOIN game in Classic WhoIsWho','http://whoiswhosql.com/img/level2tablediagram.jpg','classic2','whoiswholevel1','';
+ 
+ 
+ 
+

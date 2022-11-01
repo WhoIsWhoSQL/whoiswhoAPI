@@ -25,6 +25,8 @@ app.get("/", (req, res) => {
 
 require("./routes/user.routes.js")(app);
 require("./routes/classroom.routes.js")(app);
+require("./routes/exercise.routes.js")(app);
+require("./routes/game.routes.js")(app);
 
 //require("./routes/old_auth.routes.js")(app);
 

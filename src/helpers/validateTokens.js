@@ -31,4 +31,5 @@ function validateToken(req, res, next) {//get token from request header
 } //end of function
 
 
+  
 module.exports = [validateToken];

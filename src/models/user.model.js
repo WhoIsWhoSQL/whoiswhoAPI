@@ -1,7 +1,7 @@
 const sql = require("./db.js");
 
 // constructor
-const User = function(user) {
+const User = function (user) {
   this.name = user.name;
   this.email = user.email;
   this.password = user.password;
@@ -19,6 +19,28 @@ User.create = (newUser, result) => {
     }
 
     console.log("created user: ", { id: res.insertId, ...newUser });
+
+    if (newUser.isTeacher == 1) {
+      sql.query("INSERT INTO teachers (userId) VALUEs(?)", res.insertId, (err, res2) => {
+        if (err) {
+          console.log("error: ", err);
+          result(err, null);
+          return;
+        }
+      });
+    } 
+    else 
+    {
+
+      sql.query("INSERT INTO students (userId) VALUEs(?)", res.insertId, (err, res2) => {
+        if (err) {
+          console.log("error: ", err);
+          result(err, null);
+          return;
+        }
+      });
+    }
+
     result(null, { id: res.insertId, ...newUser });
   });
 };
@@ -43,7 +65,7 @@ User.findById = (id, result) => {
 };
 
 User.login = (email, result) => {
- 
+
   sql.query(` SELECT name,email,password,isTeacher,t.teacherId ,s.studentId  FROM users u
   left join teachers t on t.userId =u.userId 
   left join students s on s.userId =u.userId WHERE email = '${email}'`, (err, res) => {
@@ -66,7 +88,7 @@ User.login = (email, result) => {
 
 User.getAll = (title, result) => {
   let query = "SELECT * FROM users";
-console.log(query);
+  console.log(query);
   if (title) {
     query += ` WHERE title LIKE '%${title}%'`;
   }

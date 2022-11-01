@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");//AUTHENTICATE LOGIN AND RETURN JWT TOKEN
+const validateToken = require("../helpers/validateTokens");
 
 const User = require("../models/user.model.js");
 
@@ -193,13 +194,13 @@ exports.deleteAll = (req, res) => {
 
 
 
+
 function generateAccessToken(user) {
-  return accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" })
+  return accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1500m" })
 }// refreshTokens
 let refreshTokens = [];
 function generateRefreshToken(user) {
-  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "20m" })
+  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "2000m" })
   refreshTokens.push(refreshToken)
   return refreshToken;
 }
-
