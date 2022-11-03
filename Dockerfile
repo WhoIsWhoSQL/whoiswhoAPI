@@ -9,6 +9,7 @@ RUN npm install
 COPY ./src/ ./src/
 #expose the port
 EXPOSE 3000
+# run the app
 # command to run when intantiate an image
 CMD ["npm","start"]
 
