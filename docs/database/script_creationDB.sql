@@ -61,14 +61,15 @@ CREATE TABLE whoiswho.games(
 	end_date DATETIME not null,
 	teacherId int,
 	classId int,
+	selectedCharacterId int not null,
 	FOREIGN KEY (ExerciseId) REFERENCES whoiswho.exercises(ExerciseId),
 	FOREIGN KEY (teacherId) REFERENCES whoiswho.teachers(teacherId),
 	FOREIGN KEY (classId) REFERENCES whoiswho.classrooms(classId),
 	PRIMARY KEY(gameId)
 );
 
-
-CREATE TABLE whoiswho.playMoves(
+CREATE TABLE whoiswho.playmoves(
+	moveId INT AUTO_INCREMENT NOT NULL,
 	gameId INT NOT NULL,
 	studentId INT NOT NULL,
 	query varchar(2048),
@@ -77,7 +78,7 @@ CREATE TABLE whoiswho.playMoves(
 	date DATETIME NOT NULL,
 	FOREIGN KEY (studentId) REFERENCES whoiswho.students(studentId),
 	FOREIGN KEY (gameId) REFERENCES whoiswho.games(gameId),
-	PRIMARY KEY(gameId,studentId)
+	PRIMARY KEY(moveId)
 );
 
 insert into whoiswho.exercises  (name,level,description,img_tableDiagram,db_name,db_user,db_pass)

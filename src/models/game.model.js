@@ -8,11 +8,15 @@ const Game = function(game) {
   this.end_date = game.end_date;
   this.teacherId = game.teacherId;
   this.classId = game.classId;
+  this.selectedCharacterId= game.selectedCharacterId;
+
 };
 
 
 Game.create = (newGame, result) => {
 
+
+  
     console.log(newGame);
     sql.query("INSERT INTO games SET ?", newGame, (err, res) => {
       if (err) {
@@ -84,7 +88,7 @@ Game.getAllOwned= (gameId,result) => {
 
 
   Game.findByPin = (id, result) => {
-    sql.query(`SELECT * FROM games WHERE pin = ${id}`, (err, res) => {
+    sql.query(`SELECT * FROM games WHERE pin = '${id}'`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -92,7 +96,9 @@ Game.getAllOwned= (gameId,result) => {
       }
   
       if (res.length) {
-        console.log("found user: ", res[0]);
+        const exercise = res[0];
+        console.log("found exercise: ",exercise);
+        exercise.numcharacters = 24;
         result(null, res[0]);
         return;
       }
@@ -101,6 +107,7 @@ Game.getAllOwned= (gameId,result) => {
       result({ kind: "not_found" }, null);
     });
   };
+
   
 
 module.exports = Game;
