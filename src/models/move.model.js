@@ -38,11 +38,30 @@ Move.create = (newMove, result) => {
 
 
 
+Move.getAll = (gameId,studentId, result) => {
+  let query = "SELECT * FROM playmoves ";
+  console.log(query);
+  
+    query += ` WHERE gameId = '${gameId}'`;
+    query += ` AND studentId = '${studentId}'`;
+  
+  sql.query(query, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("Moves: ", res);
+    result(null, res);
+  });
+};
+
 
 
 Move.getLastMove = (studentId, gameId, result) => {
   console.log("studentId" + studentId + ", gameId:" + gameId);
-  sql.query("select * from playmoves where studentId=? and gameId = ?", [studentId, gameId], (err, res) => {
+  sql.query("select * from playmoves where studentId=? and gameId = ? order by date desc", [studentId, gameId], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -72,13 +91,14 @@ Move.getCharacters = (query, game, result) => {
       result(err, null);
       return;
     }
+    console.log("characters: ", res);
     if (res.length) {
-      result(null, res);
+      result(err,res);
       return;
     }
 
     // not found user with the id
-    result({ kind: "not_found" }, null);
+    result(null, []);
   });
 };
 

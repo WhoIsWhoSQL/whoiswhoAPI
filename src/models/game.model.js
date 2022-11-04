@@ -97,7 +97,7 @@ Game.getAllOwned= (gameId,result) => {
   
       if (res.length) {
         const exercise = res[0];
-        console.log("found exercise: ",exercise);
+        console.log("found game: ",exercise);
         exercise.numcharacters = 24;
         result(null, res[0]);
         return;

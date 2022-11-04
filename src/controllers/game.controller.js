@@ -1,4 +1,4 @@
-const Exercise = require("../models/exercise.model.js");
+//const Exercise = require("../models/exercise.model.js");
 const Game = require("../models/game.model.js");
 const Move = require("../models/move.model.js");
 
@@ -65,7 +65,7 @@ exports.create = (req, res) => {
     date DATETIME NOT NULL,*/
 //añade el ejercico a la clase.
 exports.join = (req, res) => {
-    Game.findByPin(req.body.pin, (err, data) => {
+    Game.findByPin(req.params.pin, (err, data) => {
         const move = new Move({
             gameId: data.gameId,
             studentId: req.user.studentId,
@@ -86,89 +86,7 @@ exports.join = (req, res) => {
     });
 }
 
-//obtiene la lista de personajes que quedan para escoger
-exports.getPlayGame = (req, res) => {
-    console.log("getPlayGame");
-    Game.findByPin(req.params.pin, (err, game) => {
-        //  console.log("exerciseID = "+ game.ExerciseId);   
-        Exercise.findById(game.ExerciseId, (err0, exercise) => {
-            req.body.Game = exercise;
-            console.log("exercise : " + exercise);
-            Move.getLastMove(req.user.studentId, game.gameId, (err3, data3) => {
 
-                Move.getCharacters(data3[0].query, exercise, (err2, data2) => {
-                    res.send(data2);
-                });
-            });
-        });
-    });
-};
-
-//Añade un movimiento de un studiante a un game dado por el PIN., devuelve lista de caras disponibles y error.
-exports.addMove = (req, res) => {
-    Game.findByPin(req.body.pin, (err, game) => {
-        Exercise.findById(game.ExerciseId, (err0, exercise) => {
-            req.body.Game = exercise;
-            // lanzar consulta a la bbdd de prueba
-            Move.getCharacters(req.body.query + " and Id = " + game.selectedCharacterId, exercise, (err2, listperso) => {
-                const move = null;
-                if (err2) {
-                    move = new Move({
-                        gameId: data.gameId,
-                        studentId: req.user.studentId,
-                        query: req.body.query,
-                        failed: 1,
-                        error: err2.message,
-                        result: -1,
-                        date: new Date()
-                    });
-                };
-                if (listperso.lengh) {
-                    move = new Move({
-                        gameId: data.gameId,
-                        studentId: req.user.studentId,
-                        query: req.body.query,
-                        failed: 1,
-                        error : '',
-                        result: 0,
-                        date: new Date()
-                    });
-                    Move.create(move, (err2, data3) => {
-                        if (err2)
-                            res.status(500).send({
-                                message:
-                                    err2.message || "Some error occurred while creating the game."
-                            });
-                        res.send(move);
-                    });
-                } else {
-                    Move.getCharacters(req.body.query, exercise, (err2, listpersodef) => {
-
-                        move = new Move({
-                            gameId: data.gameId,
-                            studentId: req.user.studentId,
-                            query: req.body.query,
-                            failed: 0,
-                            error: '',
-                            result: listpersodef.lengh,
-                            date: new Date()
-                        });
-
-                        Move.create(move, (err2, data3) => {
-                            if (err2)
-                                res.status(500).send({
-                                    message:
-                                        err2.message || "Some error occurred while creating the game."
-                                });
-                            res.send(move);
-                        });
-                    });
-                }
-
-            });
-        });   
-    });
-};
 
 //Ver como va la clase en tiempo real
 exports.getResults = (req, res) => {

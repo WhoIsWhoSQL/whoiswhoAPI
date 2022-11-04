@@ -93,10 +93,6 @@ exports.login = async (req, res) => {
   });
 };
 
-//  });
-
-
-
 
 // Find a single User by Id
 exports.findOne = (req, res) => {

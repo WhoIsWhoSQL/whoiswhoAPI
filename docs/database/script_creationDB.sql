@@ -74,6 +74,7 @@ CREATE TABLE whoiswho.playmoves(
 	studentId INT NOT NULL,
 	query varchar(2048),
 	failed INT NOT NULL,
+	error varchar(2048),
 	result INT NOT NULL,
 	date DATETIME NOT NULL,
 	FOREIGN KEY (studentId) REFERENCES whoiswho.students(studentId),
