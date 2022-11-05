@@ -82,14 +82,3 @@ CREATE TABLE whoiswho.playmoves(
 	PRIMARY KEY(moveId)
 );
 
-insert into whoiswho.exercises  (name,level,description,img_tableDiagram,db_name,db_user,db_pass)
- select 'Classic 1 table',1,'WHERE game in Classic WhoIsWho',
- 'http://whoiswhosql.com/img/level1tablediagram.jpg','classic1','whoiswholevel1','';
- 
- 
-insert into whoiswho.exercises  (name,level,description,img_tableDiagram,db_name,db_user,db_pass)
- select 'Classic 2 table',2,'INNERJOIN game in Classic WhoIsWho','http://whoiswhosql.com/img/level2tablediagram.jpg','classic2','whoiswholevel1','';
- 
- 
- 
-

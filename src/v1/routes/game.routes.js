@@ -23,7 +23,7 @@ router.get("/", validateToken, games.findMyGames);
 
 /**
  * @swagger
- * /api/games:
+ * /api/v1/games:
  *  post:
  *      summary: Crea una nueva partida online
  *      tags: [Games]
@@ -40,7 +40,7 @@ router.post("/", validateToken, games.create);
 
 /**
  * @swagger
- * /api/games/join/{pin}:
+ * /api/v1/games/join/{pin}:
  *  post:
  *      summary: Unirse a una partida
  *      tags: [Games]
@@ -65,7 +65,7 @@ router.post("/join/:pin", validateToken, games.join);
 
 /**
  * @swagger
- * /api/games/results:
+ * /api/v1/games/results:
  *  get:
  *      summary: Obtiene los jugadores de la partida y el num de personajes que le quedan a cada uno
  *      tags: [Games]

@@ -16,7 +16,7 @@ CREATE TABLE wiw_classic1.Personajes (
 	es_mujer int not null,
 	color_pelo varchar(100) not null,
 	color_piel varchar(100) not null,
-	PRIMARY KEY(Id)
+	PRIMARY KEY(Id) 
 );
 
 

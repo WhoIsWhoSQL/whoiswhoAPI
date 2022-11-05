@@ -1,0 +1,3 @@
+INSERT INTO `games` (`gameId`, `pin`, `ExerciseId`, `start_date`, `end_date`, `teacherId`, `classId`, `selectedCharacterId`) VALUES (4, "y66s6", 2, "2022-11-01 15:51:14", "2022-11-01 15:51:14", 1, 1, 12);
+INSERT INTO `games` (`gameId`, `pin`, `ExerciseId`, `start_date`, `end_date`, `teacherId`, `classId`, `selectedCharacterId`) VALUES (5, "hdeu4", 1, "2022-11-01 15:51:20", "2022-11-01 15:51:20", 1, 1, 3);
+INSERT INTO `games` (`gameId`, `pin`, `ExerciseId`, `start_date`, `end_date`, `teacherId`, `classId`, `selectedCharacterId`) VALUES (6, "tin2n", 1, "2022-11-01 21:32:05", "2022-11-01 21:32:05", 1, NULL, 21);

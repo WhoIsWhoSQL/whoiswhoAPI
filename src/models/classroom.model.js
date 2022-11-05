@@ -80,6 +80,7 @@ Classroom.getAllClassStudent = (studentId, result) => {
 
 
 Classroom.findById = (id, result) => {
+        console.log("find by id:" + id);
     sql.query(`SELECT * FROM classrooms WHERE classId = ${id}`, (err, res) => {
         if (err) {
             console.log("error: ", err);

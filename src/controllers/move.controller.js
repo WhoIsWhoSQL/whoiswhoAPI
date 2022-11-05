@@ -43,7 +43,7 @@ exports.addMove = (req, res) => {
                         studentId: req.user.studentId,
                         query: req.body.query,
                         failed: 1,
-                        error: err2.message,
+                        error: 'Revisa tu consulta...' + err2.message,
                         result: -1,
                         date: new Date()
                     });
@@ -63,7 +63,7 @@ exports.addMove = (req, res) => {
                             studentId: req.user.studentId,
                             query: req.body.query,
                             failed: 1,
-                            error: '',
+                            error: 'Consulta bien escrita, pero estás descartando nuestro personaje',
                             result: 0,
                             date: new Date()
                         });
@@ -83,14 +83,13 @@ exports.addMove = (req, res) => {
                                     message:
                                         err2.message || "Some error occurred while creating the game."
                                 });
-
                             
                             const move = new Move({
                                 gameId: game.gameId,
                                 studentId: req.user.studentId,
                                 query: req.body.query,
                                 failed: 0,
-                                error: '',
+                                error: '¡Consulta correcta!',
                                 result: listpersodef.length,
                                 date: new Date()
                             });

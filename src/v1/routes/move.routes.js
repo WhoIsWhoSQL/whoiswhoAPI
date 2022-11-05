@@ -5,7 +5,7 @@ var router = require("express").Router();
 
 /**
  * @swagger
- * /api/playmoves:
+ * /api/v1/playmoves:
  *  post:
  *      summary: Añade un movimiento a un jugador
  *      tags: [PlayMoves]
@@ -35,9 +35,9 @@ router.post("/", validateToken, moves.addMove);
 
 /**
  * @swagger
- * /api/playmoves/{pin}:
+ * /api/v1/playmoves/{pin}:
  *  get:
- *      summary: Otiene la lista de personajes que quedan para escoger
+ *      summary: Otiene la lista de tiradasque ha realizado el estudiante logeado
  *      tags: [PlayMoves]
  *      parameters:
  *        - name: pin

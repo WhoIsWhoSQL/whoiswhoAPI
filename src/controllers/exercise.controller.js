@@ -1,4 +1,6 @@
 const Exercise = require("../models/exercise.model.js");
+const Game = require("../models/game.model.js");
+
 
 // Retrieve all levels from the database (with condition).
 exports.findAll = (req, res) => {
@@ -36,3 +38,35 @@ exports.findOne = (req, res) => {
       } else res.send(data);
     });
   };
+
+  exports.addexercise = (req,res) => {
+
+    if (!req.params) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+    }
+    console.log(req.user + req.params);
+    const pin = (Math.random() + 1).toString(36).substring(7);
+
+    const game = new Game({
+        exerciseId: req.body.exerciseId,
+        pin: pin,
+        start_date: new Date(),
+        end_date : new Date(),
+        classId :req.params.classId ,
+        teacherId: req.user.teacherId
+    });
+
+
+    Game.create(game, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the game."
+            });
+            res.send(data);
+    });
+
+
+};
