@@ -182,28 +182,50 @@
 
       /**
  * @swagger
- * /api/v1/classrooms/join:
+ * /api/v1/classrooms/join/{pin}:
  *  post:
  *      summary: unete a una clase pasandole el pin de la misma
  *      tags: [Classroom]
+ *      parameters:
+ *        - name: pin
+ *          in: path
+ *          required: true
+ *          schema:
+ *              type: string
+
  *      responses:
  *          200:
- *              description: devuelve la clase con el pin
+ *              description: devuelve mensaje de confirmación
  *              content: 
  *                  application/json:
  *                      schema:
+ *                      type: object
+ *                      properties:
+ *                        message:
+ *                          type: string
+ *                          description: mensaje de confirmacion
+ *                      example:
+ *                        message: '¡Joined!'
+ * 
  *                         
 */
-  router.post("/join", validateToken, classrooms.join);
+  router.post("/join/:pin", validateToken, classrooms.join);
 
 
 
       /**
  * @swagger
- * /api/v1/classrooms/:id:
+ * /api/v1/classrooms/{id}
  *  delete:
  *      summary: borra una clase
  *      tags: [Classroom]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *          description: id de la clase
+ *          schema:
+ *            type: string
  *      responses:
  *          200:
  *              description: devuelve la clase con el pin

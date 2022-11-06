@@ -51,7 +51,7 @@
  * /api/v1/exercises/create/{classId}:
  *  post:
  *      summary: si eres el maestro que ha creado la clase, añade un ejercicio a la clase
- *      tags: [Classroom]
+ *      tags: [Exercise]
  *      responses:
  *          200:
  *              description: devuelve la clase con el pin
