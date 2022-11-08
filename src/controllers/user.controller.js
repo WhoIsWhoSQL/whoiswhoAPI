@@ -55,8 +55,10 @@ exports.findAll = (req, res) => {
 
 exports.login = async (req, res) => {
   const email = req.body.email;
-  console.log("find all")
+  console.log("login... email:" + email);
   var passbd = "";
+
+
   User.login(email, (err, data) => {
     if (err)
       res.status(500).send({
@@ -79,7 +81,16 @@ exports.login = async (req, res) => {
           const accessToken = generateAccessToken({ user: data });
           const refreshToken = generateRefreshToken({ user: data });
 
-          const ret = { "accessToken": accessToken, "refreshToken": refreshToken };
+          
+          const ret = {
+            "id" : data.id,
+            "name" : data.name,
+            "email" : data.email,
+            "isTeacher" : data.isTeacher,
+            "accessToken": accessToken,
+            "refreshToken": refreshToken };
+          
+        
           //  console.log(ret);
           res.json(ret);
           //   res.json({ "accessToken": accessToken, "refreshToken": refreshToken });
