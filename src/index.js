@@ -7,6 +7,7 @@ const domainWeb = process.env.DOMAIN_WEB || "http://localhost:3000";
 var corsOptions = {
   origin: `http://localhost: ${PORT}`,origin: domainWeb,
 };
+console.log("corsOptions",JSON.stringify(corsOptions));
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
