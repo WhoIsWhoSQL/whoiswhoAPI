@@ -3,22 +3,6 @@
   const validateToken = require("../../helpers/validateTokens");
   var router = require("express").Router();
 
-/*   "exercises": [
-    {
-      "exerciseId": 1,
-      "name": "Classic 1 table",
-      "level": 1,
-      "description": "WHERE game in Classic WhoIsWho",
-      "img_tableDiagram": "http://whoiswhosql.com/img/level1tablediagram.jpg"
-    },
-    {
-      "exerciseId": 2,
-      "name": "Classic 2 table",
-      "level": 2,
-      "description": "INNERJOIN game in Classic WhoIsWho",
-      "img_tableDiagram": "http://whoiswhosql.com/img/level2tablediagram.jpg"
-    }
-  ] */
 
 /**
  * @swagger
@@ -140,7 +124,7 @@
  *      tags: [Classroom]
  *      responses:
  *          200:
- *              description: devuelve la clase con el pin
+ *              description: devuelve la lista de clases
  *              content: 
  *                  application/json:
  *                      schema:
@@ -182,35 +166,66 @@
 
       /**
  * @swagger
- * /api/v1/classrooms/join:
+ * /api/v1/classrooms/join/{pin}:
  *  post:
  *      summary: unete a una clase pasandole el pin de la misma
  *      tags: [Classroom]
+ *      parameters:
+ *        - name: pin
+ *          in: path
+ *          required: true
+ *          schema:
+ *              type: string
+
  *      responses:
  *          200:
- *              description: devuelve la clase con el pin
+ *              description: devuelve mensaje de confirmación
  *              content: 
  *                  application/json:
  *                      schema:
+ *                      type: object
+ *                      properties:
+ *                        message:
+ *                          type: string
+ *                          description: mensaje de confirmacion
+ *                      example:
+ *                        message: '¡Joined!'
+ * 
  *                         
 */
-  router.post("/join", validateToken, classrooms.join);
+  router.post("/join/:pin", validateToken, classrooms.join);
 
 
 
-      /**
+/**
  * @swagger
- * /api/v1/classrooms/:id:
+ * /api/v1/classrooms/{id}:
  *  delete:
- *      summary: borra una clase
+ *      summary: borra una clase si eres el profesor que la ha creado
  *      tags: [Classroom]
+ *      parameters:
+ *        - name: id 
+ *          in: path
+ *          required: true
+ *          description: id de la clase
+ *          schema:
+ *            type: string
  *      responses:
  *          200:
- *              description: devuelve la clase con el pin
+ *              description: devuelve mensaje de confirmación
  *              content: 
  *                  application/json:
  *                      schema:
- *                         
+ *                      type: object
+ *                      properties:
+ *                        message:
+ *                          type: string
+ *                          description: mensaje de confirmacion
+ *                      example:
+ *                        message: 'classroom was deleted successfully!'
+ * 
+ *                                       
+
 */
 //borra una clase
   router.delete("/:id",validateToken, classrooms.delete);

@@ -76,11 +76,18 @@ exports.findOne = (req, res) => {
   
 exports.join = (req, res) => {
 
+
+    if (!req.params) {
+        res.status(400).send({
+          message: "Content can not be empty!"
+        });
+      }
+    
     const studentId = req.user.studentId;
     if (studentId == undefined) {
         res.status(403).send({ message: "teacher not join to class." });
     }
-    const pin = req.body.pin;
+    const pin = req.params.pin;
     console.log("añadiendo el alumno id" + studentId + " a la clase: " + pin);
     Classroom.join(pin, studentId, (err, data) => {
         if (err)
