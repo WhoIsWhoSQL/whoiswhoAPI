@@ -42,7 +42,7 @@ Classroom.join = (pin, studentId, result) => {
 //  "UPDATE users SET title = ?, description = ?, published = ? WHERE id = ?",
 //[user.title, user.description, user.published, id],
 Classroom.getAllOwned = (teacherId, result) => {
-    let query = "SELECT c.* FROM classrooms c  LEFT JOIN games g on c.classId = g.classId WHERE c.teacherId=?";
+    let query = "SELECT distinct c.* FROM classrooms c  LEFT JOIN games g on c.classId = g.classId WHERE c.teacherId=?";
     console.log(query);
 
 
@@ -80,6 +80,7 @@ Classroom.getAllClassStudent = (studentId, result) => {
 
 
 Classroom.findById = (id, result) => {
+        console.log("find by id:" + id);
     sql.query(`SELECT * FROM classrooms WHERE classId = ${id}`, (err, res) => {
         if (err) {
             console.log("error: ", err);

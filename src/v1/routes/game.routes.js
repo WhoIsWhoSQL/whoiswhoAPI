@@ -8,7 +8,7 @@ var router = require("express").Router();
  * @swagger
  * /api/games:
  *  get:
- *      summary: Crea una nueva partida online
+ *      summary: Encuentra una nueva partida online
  *      tags: [Games]
  *      responses:
  *          200:
@@ -23,8 +23,8 @@ router.get("/", validateToken, games.findMyGames);
 
 /**
  * @swagger
- * /api/games:
- *  get:
+ * /api/v1/games:
+ *  post:
  *      summary: Crea una nueva partida online
  *      tags: [Games]
  *      responses:
@@ -40,42 +40,9 @@ router.post("/", validateToken, games.create);
 
 /**
  * @swagger
- * /api/games/join:
+ * /api/v1/games/join/{pin}:
  *  post:
  *      summary: Unirse a una partida
- *      tags: [Games]
- *      responses:
- *          200:
- *              description: todos los usuarios
- *              content: 
- *                  application/json:
- *                      schema:
- *                         
-*/
-router.post("/join", validateToken, games.join);
-
-
-/**
- * @swagger
- * /api/games/moves:
- *  post:
- *      summary: Añade un movimiento a un jugador
- *      tags: [Games]
- *      responses:
- *          200:
- *              description: devuelve lista de personajes que quedan para escoger.
- *              content: 
- *                  application/json:
- *                      schema:
- *                         
-*/
-router.post("/moves", validateToken, games.addMove);
-
-/**
- * @swagger
- * /api/games/moves/{pin}:
- *  get:
- *      summary: Otiene la lista de personajes que quedan para escoger
  *      tags: [Games]
  *      parameters:
  *        - name: pin
@@ -86,17 +53,19 @@ router.post("/moves", validateToken, games.addMove);
  *          
  *      responses:
  *          200:
- *              description: devuelve lista de personajes que quedan para escoger.
+ *              description: todos los usuarios
  *              content: 
  *                  application/json:
  *                      schema:
  *                         
 */
-router.get("/moves/:pin", validateToken, games.getPlayGame);
+router.post("/join/:pin", validateToken, games.join);
+
+
 
 /**
  * @swagger
- * /api/games/results:
+ * /api/v1/games/results:
  *  get:
  *      summary: Obtiene los jugadores de la partida y el num de personajes que le quedan a cada uno
  *      tags: [Games]
@@ -109,8 +78,6 @@ router.get("/moves/:pin", validateToken, games.getPlayGame);
  *                         
 */
 //
-
-
 
 router.get("/results", validateToken, games.getResults);
 

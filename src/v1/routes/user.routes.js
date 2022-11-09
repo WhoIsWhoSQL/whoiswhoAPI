@@ -38,7 +38,7 @@ const router = require("express").Router();
 
 /**
  * @swagger
- * /api/users:
+ * /api/v1/users:
  *  post:
  *      summary: crea un nuevo usuario
  *      tags: [User]
@@ -58,7 +58,7 @@ router.post("/", users.create);
 
 /**
  * @swagger
- * /api/users/login:
+ * /api/v1/users/login:
  *  post:
  *      summary: crea un nuevo usuario
  *      tags: [User]
@@ -85,7 +85,7 @@ router.post("/login", users.login);
 
 /**
  * @swagger
- * /api/users:
+ * /api/v1/users:
  *  get:
  *      summary: crea un nuevo usuario
  *      tags: [User]
