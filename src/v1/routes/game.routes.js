@@ -3,10 +3,28 @@ const games = require("../../controllers/game.controller.js");
 const validateToken = require("../../helpers/validateTokens");
 
 var router = require("express").Router();
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      newGame:
+ *          type: object
+ *          properties:
+ *              exerciseId:
+ *                  type: integer
+ *                  description: id del ejercicio
+ *          required: 
+ *              - exerciseId
+ *          example:
+ *                exerciseId: '1'
+ *
+ * 
+    
+ */
 
 /**
  * @swagger
- * /api/games:
+ * /api/v1/games:
  *  get:
  *      summary: Encuentra una nueva partida online
  *      tags: [Games]
@@ -27,6 +45,13 @@ router.get("/", validateToken, games.findMyGames);
  *  post:
  *      summary: Crea una nueva partida online
  *      tags: [Games]
+ *      requestBody:
+ *          required: true
+ *          content: 
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      $ref : '#components/schemas/newGame'
  *      responses:
  *          200:
  *              description: todos los usuarios

@@ -31,7 +31,23 @@ exports.create = (req, res) => {
           message:
             err.message || "Some error occurred while creating the User."
         });
-      else res.send(data);
+      else {
+
+        const accessToken = generateAccessToken({ user: data });
+        const refreshToken = generateRefreshToken({ user: data });
+        const ret = {
+          "id" : data.id,
+          "name" : data.name,
+          "email" : data.email,
+          "isTeacher" : data.isTeacher,
+          "accessToken": accessToken,
+          "refreshToken": refreshToken };
+          res.send(ret);
+
+      }
+      
+      
+      
     });
 
   });

@@ -27,6 +27,24 @@ Exercise.getAll= (result) => {
     });
   };
 
+
+
+  Exercise.getAllMinimize= (result) => {
+    let query = "SELECT ExerciseId,name,description ,img_tableDiagram FROM exercises";
+  console.log(query);
+  
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log("users: ", res);
+      result(null, res);
+    });
+  };
+
 Exercise.findById = (id, result) => {
     sql.query(`SELECT * FROM exercises WHERE exerciseId = ${id}`, (err, res) => {
       if (err) {

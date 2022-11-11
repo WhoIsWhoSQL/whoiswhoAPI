@@ -6,12 +6,14 @@ const Game = require("../models/game.model.js");
 exports.findAll = (req, res) => {
     console.log("find all Exercise ");
     if (req.user.isTeacher) {
-        Exercise.getAll((err, data) => {
+        Exercise.getAllMinimize((err, data) => {
             if (err)
                 res.status(500).send({
                     message:
                         err.message || "Some error occurred while retrieving Exercise."
                 });
+            
+                
             else res.send(data);
         });
     }

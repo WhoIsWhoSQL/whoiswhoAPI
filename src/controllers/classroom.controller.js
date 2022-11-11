@@ -45,14 +45,22 @@ exports.findAll = (req, res) => {
             else res.send(data);
         });
     } else {
-        Classroom.getAllClassStudent(req.user.studentId, (err, data) => {
-            if (err)
-                res.status(500).send({
-                    message:
-                        err.message || "Some error occurred while retrieving User."
-                });
-            else res.send(data);
-        });
+        try {
+            console.log("find all my classrooms by student:" + req.user.studentId);
+            Classroom.getAllClassStudent(req.user.studentId, (err, data) => {
+                if (err)
+                    res.status(500).send({
+                        message:"error al obtener las clases de un alumno"
+                    });
+                else res.send(data);
+            });}
+        catch (err) {
+            res.status(500).send({
+                message:
+                   "error al obtener las clases de un alumno"
+            });
+        }
+        
     }
 };
 

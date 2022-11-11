@@ -66,12 +66,12 @@ Classroom.getAllClassStudent = (studentId, result) => {
 
     sql.query(query, studentId, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+           // console.log("error: ", err);
             result(null, err);
             return;
         }
 
-        console.log("users: ", res);
+       // console.log("users: ", res);
         result(null, res);
     });
 };

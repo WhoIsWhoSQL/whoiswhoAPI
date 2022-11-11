@@ -90,7 +90,7 @@ Game.getAllOwned= (gameId,result) => {
   Game.findByPin = (id, result) => {
     sql.query(`SELECT * FROM games WHERE pin = '${id}'`, (err, res) => {
       if (err) {
-        console.log("error: ", err);
+       // console.log("error: ", err);
         result(err, null);
         return;
       }

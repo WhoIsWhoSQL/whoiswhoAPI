@@ -8,7 +8,7 @@ const DB_DATABASE = process.env.DB_DATABASE;
 const DB_PORT = process.env.DB_PORT;
 
 
-console.log ("DBPASS:" +DB_PASSWORD);
+// console.log ("DBPASS:" +DB_PASSWORD);
 var connection = mysql.createPool({
   host: DB_HOST,
   user: DB_USER,
