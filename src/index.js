@@ -1,4 +1,6 @@
 const express = require("express");
+const https = require("https");
+var fs = require('fs');
 const cors = require("cors");
 require("dotenv").config()
 const app = express();
@@ -34,10 +36,13 @@ app.use('/api/v1/playmoves', moveroute);
 app.use('/api/v1/characters', characteroute);
 
 
-
-
-// set port, listen for requests
-app.listen(PORT, () => {
+const certificate_crt = process.env.CERTIFICATE_PATH_CRT || './src/certs/apiwhoiswho.crt';
+const certificate_key = process.env.CERTIFICATE_PATH_KEY || './src/certs/apiwhoiswho.pem';
+https.createServer({
+  cert: fs.readFileSync(certificate_crt),
+  key: fs.readFileSync(certificate_key)
+},app).listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
   V1SwaggerDocs(app, PORT);
 });
+

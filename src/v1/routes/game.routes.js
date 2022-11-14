@@ -17,6 +17,16 @@ var router = require("express").Router();
  *              - exerciseId
  *          example:
  *                exerciseId: '1'
+*      joinGame:
+ *          type: object
+ *          properties:
+ *              pin:
+ *                  type: string
+ *                  description: pin de la partida
+ *          required: 
+ *              - pin
+ *          example:
+ *                pin: '123456'
  *
  * 
     
@@ -26,7 +36,7 @@ var router = require("express").Router();
  * @swagger
  * /api/v1/games:
  *  get:
- *      summary: Encuentra una nueva partida online
+ *      summary: Encuentra mis partidas online
  *      tags: [Games]
  *      responses:
  *          200:
@@ -37,6 +47,32 @@ var router = require("express").Router();
  *                         
 */
 router.get("/", validateToken, games.findMyGames);
+
+
+    /**
+ * @swagger
+ * /api/v1/games/{pin}:
+ *  get:
+ *      summary: muestra una partida
+ *      tags: [Games]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *          description: id de la partida
+ *          schema:
+ *            type: string
+ *      responses:
+ *          200:
+ *              description: devuelve la partida con el id
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                       
+ *                                           
+*/
+  //
+  router.get("/:id", validateToken, games.findOne);
 
 
 /**
@@ -69,12 +105,13 @@ router.post("/", validateToken, games.create);
  *  post:
  *      summary: Unirse a una partida
  *      tags: [Games]
- *      parameters:
- *        - name: pin
- *          in: path
+ *      requestBody:
  *          required: true
- *          schema:
- *              type: string
+ *          content: 
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      $ref : '#components/schemas/joinGame'
  *          
  *      responses:
  *          200:
@@ -84,7 +121,7 @@ router.post("/", validateToken, games.create);
  *                      schema:
  *                         
 */
-router.post("/join/:pin", validateToken, games.join);
+router.post("/join", validateToken, games.join);
 
 
 
@@ -105,6 +142,43 @@ router.post("/join/:pin", validateToken, games.join);
 //
 
 router.get("/results", validateToken, games.getResults);
+
+
+
+
+
+/**
+ * @swagger
+ * /api/v1/games/{id}:
+ *  delete:
+ *      summary: borra una partida si eres el profesor que la ha creado
+ *      tags: [Games]
+ *      parameters:
+ *        - name: id 
+ *          in: path
+ *          required: true
+ *          description: id de la partida
+ *          schema:
+ *            type: string
+ *      responses:
+ *          200:
+ *              description: devuelve mensaje de confirmación
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                      type: object
+ *                      properties:
+ *                        message:
+ *                          type: string
+ *                          description: mensaje de confirmacion
+ *                      example:
+ *                        message: 'classroom was deleted successfully!'
+ * 
+ *                                       
+
+*/
+//borra una clase
+router.delete("/:id",validateToken, games.delete);
 
 
 module.exports = router;

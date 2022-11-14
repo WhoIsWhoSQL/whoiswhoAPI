@@ -38,13 +38,13 @@ Move.create = (newMove, result) => {
 
 
 
-Move.getAll = (gameId,studentId, result) => {
+Move.getAll = (gameId, studentId, result) => {
   let query = "SELECT * FROM playmoves ";
   console.log(query);
-  
-    query += ` WHERE gameId = '${gameId}'`;
-    query += ` AND studentId = '${studentId}'`;
-  
+
+  query += ` WHERE gameId = '${gameId}'`;
+  query += ` AND studentId = '${studentId}'`;
+  query += ` ORDER BY date DESC`;
   sql.query(query, (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -59,9 +59,9 @@ Move.getAll = (gameId,studentId, result) => {
 
 
 
-Move.getLastMove = (studentId, gameId, result) => {
+Move.getLastMoveOK = (studentId, gameId, result) => {
   console.log("studentId" + studentId + ", gameId:" + gameId);
-  sql.query("select * from playmoves where studentId=? and gameId = ? order by date desc", [studentId, gameId], (err, res) => {
+  sql.query("select * from playmoves where failed=0 and  studentId=? and gameId = ? order by date desc", [studentId, gameId], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -77,7 +77,7 @@ Move.getLastMove = (studentId, gameId, result) => {
 Move.getCharacters = (query, game, result) => {
   const mysql = require("mysql");
 
-  console.log("query:"+ query)
+  //console.log("query:" + query)
   var connectionGame = mysql.createPool({
     host: process.env.DB_HOST,
     user: game.db_user,
@@ -91,9 +91,9 @@ Move.getCharacters = (query, game, result) => {
       result(err, null);
       return;
     }
-    console.log("characters: ", res);
+    //console.log("characters: ", res);
     if (res.length) {
-      result(err,res);
+      result(err, res);
       return;
     }
 

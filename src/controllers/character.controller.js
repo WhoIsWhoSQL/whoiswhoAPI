@@ -11,7 +11,7 @@ exports.getCharactersToPlay = (req, res) => {
         Exercise.findById(game.ExerciseId, (err0, exercise) => {
             req.body.Game = exercise;
             console.log("exercise : " + exercise);
-            Move.getLastMove(req.user.studentId, game.gameId, (err3, data3) => {
+            Move.getLastMoveOK(req.user.studentId, game.gameId, (err3, data3) => {
 
                 Move.getCharacters(data3[0].query, exercise, (err2, data2) => {
                     res.send(data2);

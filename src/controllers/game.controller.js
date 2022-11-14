@@ -16,7 +16,56 @@ exports.findMyGames = (req, res) => {
         });
     }
     else {
-        res.status(403).send({ message: "your user not autorized" });
+
+        Game.getAllStudentGames(req.user.studentId, (err, data) => {
+            if (err)
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while retrieving Exercise."
+                });
+            else res.send(data);
+        });
+       
+    }
+};
+
+exports.findOne = (req, res) => {
+    console.log("find all Exercise ");
+    if (req.user.isTeacher) {
+        Game.findByIdTeacher(req.params.id, req.user.teacherId, (err, data) => {
+
+            if (err) {
+                if (err.kind === "not_found") {
+                    res.status(404).send({
+                        message: `Not found game with id ${req.params.id}.`
+                    });
+                } else {
+                    res.status(500).send({
+                        message: "Error retrieving game with id " + req.params.id
+                    });
+                }
+            }
+            else res.send(data);
+
+        });
+    } else {
+
+        Game.findByIdStudent(req.params.id, req.user.studentId, (err, data) => {
+
+            if (err) {
+                if (err.kind === "not_found") {
+                    res.status(404).send({
+                        message: `Not found game with id ${req.params.id}.`
+                    });
+                } else {
+                    res.status(500).send({
+                        message: "Error retrieving game with id " + req.params.id
+                    });
+                }
+            }
+            else res.send(data);
+
+        });
     }
 };
 
@@ -65,7 +114,8 @@ exports.create = (req, res) => {
     date DATETIME NOT NULL,*/
 //añade el ejercico a la clase.
 exports.join = (req, res) => {
-    Game.findByPin(req.params.pin, (err, data) => {
+    console.log("voy a unierme a una clase");
+    Game.findByPin(req.body.pin, (err, data) => {
         const move = new Move({
             gameId: data.gameId,
             studentId: req.user.studentId,
@@ -91,4 +141,28 @@ exports.join = (req, res) => {
 //Ver como va la clase en tiempo real
 exports.getResults = (req, res) => {
     res.send("ToDo");
+};
+
+
+
+exports.delete = (req, res) => {
+    if (req.user.isTeacher) {
+        Game.remove(req.params.id, req.user.teacherId, (err, data) => {
+            if(err) {
+                if (err.kind === "not_found") {
+                    res.status(404).send({
+                        message: `Not found User with id ${req.params.id}.`
+                    });
+                } else {
+                    res.status(500).send({
+                        message: "Could not delete classroom with id " + req.params.id
+                    });
+                }
+            } else res.send({ message: `classroom was deleted successfully!` });
+        });
+    } else {
+        es.status(404).send({
+            message: `Not found User with id ${req.params.id}.`
+        });
+    }
 };
