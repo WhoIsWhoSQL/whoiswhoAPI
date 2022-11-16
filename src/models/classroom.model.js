@@ -1,6 +1,5 @@
 const sql = require("./db.js");
-const Game = require("./game.model.js");
-
+const Exercise = require("./exercise.model.js");
 // constructor
 const Classroom = function (classroom) {
     this.name = classroom.name;
@@ -66,12 +65,12 @@ Classroom.getAllClassStudent = (studentId, result) => {
 
     sql.query(query, studentId, (err, res) => {
         if (err) {
-           // console.log("error: ", err);
+            // console.log("error: ", err);
             result(null, err);
             return;
         }
 
-       // console.log("users: ", res);
+        // console.log("users: ", res);
         result(null, res);
     });
 };
@@ -79,8 +78,8 @@ Classroom.getAllClassStudent = (studentId, result) => {
 
 
 
-Classroom.findById = (id, result) => {
-        console.log("find by id:" + id);
+Classroom.findById = (id, user, result) => {
+    console.log("find by id:" + id);
     sql.query(`SELECT * FROM classrooms WHERE classId = ${id}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
@@ -93,44 +92,70 @@ Classroom.findById = (id, result) => {
 
 
             const myclass = res[0];
-            Game.getGamesByClass(myclass.classId, (err, data) => {
+            Exercise.getExerciseByClass(myclass.classId, (err, data) => {
 
-                console.log("lista:" +  data );
-               myclass.exercises =  data ;
-                
-              console.log (myclass);
-              result(null, myclass);
-                return;
+                console.log("lista:" + data);
+                myclass.exercises = data;
+
+
+                if (user.isTeacher) {
+                    sql.query(`SELECT u.userId,u.name,u.email  FROM studentsclassroom sc 
+                    INNER JOIN students s on s.studentId=sc.studentId
+                    INNER JOIN users u ON u.userId=s.userId WHERE classId = ${id}`, (err, alumnos) => {
+                        if (err) {
+                            console.log("error: ", err);
+                            result(err, null);
+                            return;
+                        }
+
+                        myclass.Students = alumnos;
+                        console.log(myclass);
+                        result(null, myclass);
+                        return;
+                    });
+
+
+                } else {
+
+                    console.log(myclass);
+                    result(null, myclass);
+                    return;
+                }
+
+
 
 
 
             });
-        }else{
+        } else {
 
-        // not found classroom with the id
-        result({ kind: "not_found" }, null);
+            // not found classroom with the id
+            result({ kind: "not_found" }, null);
         }
     });
 };
 
 
 
-Classroom.remove = (id,teacherId, result) => {
+Classroom.remove = (id, teacherId, result) => {
     sql.query(`DELETE FROM classroom WHERE classId = ${id} and teacherId = ${teacherId}`, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
-  
-      if (res.affectedRows == 0) {
-        // not found user with the id
-        result({ kind: "not_found" }, null);
-        return;
-      }
-  
-      console.log("deleted games with id: ", id);
-      result(null, res);
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        if (res.affectedRows == 0) {
+            // not found user with the id
+            result({ kind: "not_found" }, null);
+            return;
+        }
+
+        console.log("deleted games with id: ", id);
+        result(null, res);
     });
-  };
+};
+
+
+
 module.exports = Classroom;

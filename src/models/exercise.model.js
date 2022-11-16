@@ -64,4 +64,41 @@ Exercise.findById = (id, result) => {
     });
   };
   
+
+  Exercise.addExerciseToClass = (exerciseId,classId,result) =>{
+
+
+    console.log("addExerciseToClass");
+    sql.query(`INSERT INTO classroomexercise (exerciseId,classId) VALUES (${exerciseId},${classId})`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      console.log("add exercise to classroom: ",);
+      result(null, "OK");
+    });
+  };
+
+
+
+  Exercise.getExerciseByClass = ( id, result ) => {
+
+    sql.query(`SELECT e.exerciseId ,e.name,e.level,e.description ,e.img_tableDiagram  FROM classroomexercise c 
+    INNER JOIN exercises e on e.exerciseId = c.exerciseId 
+    WHERE c.classId = ${id}`, (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(err, null);
+          return;
+        }
+    
+      
+          console.log("found games: ", res);
+          result(null, res);
+    });
+
+  };
+
+
 module.exports = Exercise;

@@ -82,3 +82,13 @@ CREATE TABLE whoiswho.playmoves(
 	PRIMARY KEY(moveId)
 );
 
+
+CREATE TABLE whoiswho.classroomexercise(
+exerciseId int not null,
+classId int not null,
+	FOREIGN KEY (exerciseId) REFERENCES whoiswho.exercises(exerciseId),
+		FOREIGN KEY (classId) REFERENCES whoiswho.classrooms(classId),
+		PRIMARY KEY(exerciseId,classId)
+)
+
+)

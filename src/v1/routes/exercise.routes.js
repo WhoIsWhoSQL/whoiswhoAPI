@@ -48,10 +48,24 @@
   
        /**
  * @swagger
- * /api/v1/exercises/create/{classId}:
+ * /api/v1/exercises/add/:
  *  post:
  *      summary: si eres el maestro que ha creado la clase, añade un ejercicio a la clase
  *      tags: [Exercise]
+ *      requestBody:
+ *          required: true
+ *          content: 
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          exerciseId:
+ *                            type: int
+ *                          classId:
+ *                              type: int 
+ *                      example:
+ *                          classId: 1
+ *                          exerciseId: 1 
  *      responses:
  *          200:
  *              description: devuelve la clase con el pin
@@ -60,7 +74,38 @@
  *                      schema:
  *                         
 */
-router.post("/create/:classId",validateToken,exercises.addexercise);
+router.post("/add/",validateToken,exercises.addexercise);
+
+
+       /**
+ * @swagger
+ * /api/v1/exercises/start/:
+ *  post:
+ *      summary: si eres alumno en una clase, empieza el ejercicio indicado como parametro
+ *      tags: [Exercise]
+ *      requestBody:
+ *          required: true
+ *          content: 
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          exerciseId:
+ *                            type: int
+ *                          classId:
+ *                              type: int  
+ *                      example:
+ *                          classId: 1
+ *                          exerciseId: 1 
+ *      responses:
+ *          200:
+ *              description: devuelve la clase con el pin
+ *              content: 
+ *                  application/json:
+ *                      schema:
+ *                         
+*/
+router.post("/start/",validateToken,exercises.startexercise);
 
 
 

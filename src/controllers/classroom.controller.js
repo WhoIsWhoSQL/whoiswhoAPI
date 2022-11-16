@@ -67,7 +67,7 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
    
-    Classroom.findById(req.params.id, (err, data) => {
+    Classroom.findById(req.params.id,req.user, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({

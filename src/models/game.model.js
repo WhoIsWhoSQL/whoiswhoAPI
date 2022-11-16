@@ -66,24 +66,6 @@ Game.getAllOwned= (gameId,result) => {
       result(null, res);
     });
   };
-  Game.getGamesByClass = ( id, result ) => {
-
-    sql.query(`SELECT e.exerciseId ,e.name,e.level,e.description ,e.img_tableDiagram  FROM games g 
-    INNER JOIN exercises e on e.exerciseId = g.exerciseId 
-    WHERE g.classId = ${id}`, (err, res) => {
-        if (err) {
-          console.log("error: ", err);
-          result(err, null);
-          return;
-        }
-    
-      
-          console.log("found games: ", res);
-          result(null, res);
-    });
-
-  };
-
   Game.findByIdTeacher = (id,teacherId, result) => {
     sql.query(`SELECT * FROM games WHERE gameId = ${id} and teacherId = ${teacherId}`, (err, res) => {
       if (err) {
