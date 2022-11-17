@@ -10,7 +10,6 @@ const Move = require("../models/move.model.js");
 //obtiene la lista de tiradas de un juego
 exports.getPlayGame = (req, res) => {
     console.log("ToDo: getPlayGame");
-
     console.log("find all my playmoves by pin and user:" + req.user.studentId);
 
     Game.findByPin(req.params.pin, (err, data) => {
