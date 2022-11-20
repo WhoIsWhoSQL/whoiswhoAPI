@@ -23,7 +23,7 @@ const Move = function (move) {
 
 
 Move.create = (newMove, result) => {
-  console.log(newMove);
+//  console.log(newMove);
   sql.query("INSERT INTO playmoves SET ?", newMove, (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -31,7 +31,7 @@ Move.create = (newMove, result) => {
       return;
     }
 
-    console.log("created move: ", { id: res.insertId, ...newMove });
+ //   console.log("created move: ", { id: res.insertId, ...newMove });
     result(null, { id: res.insertId, ...newMove });
   });
 };
@@ -40,7 +40,7 @@ Move.create = (newMove, result) => {
 
 Move.getAll = (gameId, studentId, result) => {
   let query = "SELECT * FROM playmoves ";
-  console.log(query);
+ // console.log(query);
 
   query += ` WHERE gameId = '${gameId}'`;
   query += ` AND studentId = '${studentId}'`;
@@ -52,7 +52,7 @@ Move.getAll = (gameId, studentId, result) => {
       return;
     }
 
-    console.log("Moves: ", res);
+ //   console.log("Moves: ", res);
     result(null, res);
   });
 };
@@ -60,7 +60,7 @@ Move.getAll = (gameId, studentId, result) => {
 
 
 Move.getLastMoveOK = (studentId, gameId, result) => {
-  console.log("studentId" + studentId + ", gameId:" + gameId);
+ // console.log("studentId" + studentId + ", gameId:" + gameId);
   sql.query("select * from playmoves where failed=0 and  studentId=? and gameId = ? order by date desc", [studentId, gameId], (err, res) => {
     if (err) {
       console.log("error: ", err);

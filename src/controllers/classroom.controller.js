@@ -35,7 +35,7 @@ exports.create = (req, res) => {
 // Retrieve all class from the database (with condition).
 exports.findAll = (req, res) => {
     if (req.user.isTeacher == 1) {
-        console.log("find all my classrooms by teacher:" + req.user.teacherId);
+       // console.log("find all my classrooms by teacher:" + req.user.teacherId);
         Classroom.getAllOwned(req.user.teacherId, (err, data) => {
             if (err)
                 res.status(500).send({
@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
         });
     } else {
         try {
-            console.log("find all my classrooms by student:" + req.user.studentId);
+         //   console.log("find all my classrooms by student:" + req.user.studentId);
             Classroom.getAllClassStudent(req.user.studentId, (err, data) => {
                 if (err)
                     res.status(500).send({
@@ -96,7 +96,7 @@ exports.join = (req, res) => {
         res.status(403).send({ message: "teacher not join to class." });
     }
     const pin = req.params.pin;
-    console.log("añadiendo el alumno id" + studentId + " a la clase: " + pin);
+ //   console.log("añadiendo el alumno id" + studentId + " a la clase: " + pin);
     Classroom.join(pin, studentId, (err, data) => {
         if (err)
             res.status(500).send({

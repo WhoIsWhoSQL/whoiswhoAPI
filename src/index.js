@@ -28,6 +28,12 @@ const { swaggerDocs: V1SwaggerDocs } = require("./v1/swagger.js");
 
 //ROUTES
 
+var logger = function(req, res, next) {
+  
+  console.log(req.method+ req.url  );
+  next(); // Passing the request to the next handler in the stack.
+}
+app.use(logger);
 app.use('/api/v1/users', userroute);
 app.use('/api/v1/classrooms', classroomroute);
 app.use('/api/v1/exercises', exerciseroute);

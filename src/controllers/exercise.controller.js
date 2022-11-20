@@ -1,5 +1,4 @@
-const { findIndex } = require("../helpers/validateTokens.js");
-const { addExerciseToClass } = require("../models/exercise.model.js");
+
 const Exercise = require("../models/exercise.model.js");
 const Game = require("../models/game.model.js");
 const Move = require("../models/move.model.js");
@@ -7,7 +6,7 @@ const Move = require("../models/move.model.js");
 
 // Retrieve all levels from the database (with condition).
 exports.findAll = (req, res) => {
-  console.log("find all Exercise ");
+ // console.log("find all Exercise ");
   if (req.user.isTeacher) {
     Exercise.getAllMinimize((err, data) => {
       if (err)
@@ -46,11 +45,11 @@ exports.findOne = (req, res) => {
 
 exports.addexercise = (req, res) => {
 
-  console.log("addexercise:" + JSON.stringify(req.body));
+ // console.log("addexercise:" + JSON.stringify(req.body));
   Exercise.getExerciseByClass(req.body.classId, (err, data) => {
 
     let existe = data.filter(ex => ex.exerciseId === req.body.exerciseId);
-    console.log("existe:" + JSON.stringify(existe));
+  //  console.log("existe:" + JSON.stringify(existe));
     if (existe.length < 1) {
       Exercise.addExerciseToClass(req.body.classId, req.body.exerciseId, (err, data) => {
         if (err) {
@@ -83,7 +82,7 @@ exports.startexercise = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-  console.log(req.user + req.body);
+  //console.log(req.user + req.body);
   const pin = (Math.random() + 1).toString(36).substring(7);
   const selectedCharacterId = Math.floor(Math.random() * (24 - 1)) + 1;
 
@@ -96,7 +95,7 @@ exports.startexercise = (req, res) => {
     teacherId: null,
     selectedCharacterId: selectedCharacterId
   });
-  console.log("gameeeee:" + JSON.stringify(game));
+  //console.log("gameeeee:" + JSON.stringify(game));
   Game.create(game, (err, data) => {
     if (err)
       res.status(500).send({

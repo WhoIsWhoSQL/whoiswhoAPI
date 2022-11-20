@@ -4,7 +4,7 @@ const Move = require("../models/move.model.js");
 
 // si es teacher, obtiene todos los games que has creado, si es alumno.
 exports.findMyGames = (req, res) => {
-    console.log("find all Exercise ");
+  //  console.log("find all my games! ");
     if (req.user.isTeacher) {
         Game.getAllOwned(req.user.teacherId, (err, data) => {
             if (err)
@@ -25,12 +25,12 @@ exports.findMyGames = (req, res) => {
                 });
             else res.send(data);
         });
-       
+
     }
 };
 
 exports.findOne = (req, res) => {
-    console.log("find all Exercise ");
+   // console.log("find all Exercise ");
     if (req.user.isTeacher) {
         Game.findByIdTeacher(req.params.id, req.user.teacherId, (err, data) => {
 
@@ -84,8 +84,8 @@ exports.create = (req, res) => {
     const game = new Game({
         exerciseId: req.body.exerciseId,
         pin: pin,
-        start_date: new Date(),
-        end_date: new Date(),
+        start_date: null,
+        end_date: null,
         teacherId: req.user.teacherId,
         selectedCharacterId: selectedCharacterId
     });
@@ -140,7 +140,34 @@ exports.join = (req, res) => {
 
 //Ver como va la clase en tiempo real
 exports.getResults = (req, res) => {
-    res.send("ToDo");
+    if (req.user.isTeacher) {
+        if (req.params.id === undefined) { 
+            res.status(404).send({
+                message: "You are not allowed to do this action"
+            });
+
+        } else {
+            Game.getResults(req.params.id, (err, data) => {
+                if (err) {
+                    if (err.kind === "not_found") {
+                        res.status(404).send({
+                            message: `Not found game with id ${req.params.id}.`
+                        });
+                    } else {
+                        res.status(500).send({
+                            message: "Error retrieving game with id " + req.params.id
+                        });
+                    }
+                }
+                else res.send(data);
+
+            });
+        }
+    } else {
+        res.status(403).send({
+            message: "You are not allowed to do this action"
+        });
+    }
 };
 
 
@@ -148,7 +175,7 @@ exports.getResults = (req, res) => {
 exports.delete = (req, res) => {
     if (req.user.isTeacher) {
         Game.remove(req.params.id, req.user.teacherId, (err, data) => {
-            if(err) {
+            if (err) {
                 if (err.kind === "not_found") {
                     res.status(404).send({
                         message: `Not found User with id ${req.params.id}.`
@@ -165,4 +192,50 @@ exports.delete = (req, res) => {
             message: `Not found User with id ${req.params.id}.`
         });
     }
+};
+
+
+
+exports.updateStartDate = (req, res) => {
+    // Validate Request
+   // console.log("UPDATE!!!!!!" + req.params.id);
+    Game.updateStartDate(
+        req.params.id,
+        (err, data) => {
+            if (err) {
+                if (err.kind === "not_found") {
+                    res.status(404).send({
+                        message: `Not found Game with id ${req.params.id}.`
+                    });
+                } else {
+                    res.status(500).send({
+                        message: "Error updating Game with id " + req.params.id
+                    });
+                }
+            } else res.send(data);
+        }
+    );
+};
+
+
+
+exports.updateEndDate = (req, res) => {
+    // Validate Request
+    console.log("UPDATE!!!!!!");
+    Game.updateEndDate(
+        req.params.id,
+        (err, data) => {
+            if (err) {
+                if (err.kind === "not_found") {
+                    res.status(404).send({
+                        message: `Not found Game with id ${req.params.id}.`
+                    });
+                } else {
+                    res.status(500).send({
+                        message: "Error updating Game with id " + req.params.id
+                    });
+                }
+            } else res.send(data);
+        }
+    );
 };
