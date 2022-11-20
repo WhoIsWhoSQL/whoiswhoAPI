@@ -13,7 +13,7 @@ const Exercise = function(exercise) {
 
 Exercise.getAll= (result) => {
     let query = "SELECT * FROM exercises";
-  console.log(query);
+ // console.log(query);
   
     sql.query(query, (err, res) => {
       if (err) {
@@ -22,7 +22,7 @@ Exercise.getAll= (result) => {
         return;
       }
   
-      console.log("users: ", res);
+ //     console.log("users: ", res);
       result(null, res);
     });
   };
@@ -31,7 +31,7 @@ Exercise.getAll= (result) => {
 
   Exercise.getAllMinimize= (result) => {
     let query = "SELECT ExerciseId,name,description ,img_tableDiagram FROM exercises";
-  console.log(query);
+ // console.log(query);
   
     sql.query(query, (err, res) => {
       if (err) {
@@ -40,7 +40,7 @@ Exercise.getAll= (result) => {
         return;
       }
   
-      console.log("users: ", res);
+  //    console.log("users: ", res);
       result(null, res);
     });
   };
@@ -54,7 +54,7 @@ Exercise.findById = (id, result) => {
       }
   
       if (res.length) {
-        console.log("found Exercise: ", res[0]);
+   //     console.log("found Exercise: ", res[0]);
         result(null, res[0]);
         return;
       }
@@ -68,14 +68,14 @@ Exercise.findById = (id, result) => {
   Exercise.addExerciseToClass = (exerciseId,classId,result) =>{
 
 
-    console.log("addExerciseToClass");
+ //   console.log("addExerciseToClass");
     sql.query(`INSERT INTO classroomexercise (exerciseId,classId) VALUES (${exerciseId},${classId})`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
-      console.log("add exercise to classroom: ",);
+    //  console.log("add exercise to classroom: ",);
       result(null, "OK");
     });
   };
@@ -94,7 +94,7 @@ Exercise.findById = (id, result) => {
         }
     
       
-          console.log("found games: ", res);
+     //     console.log("found games: ", res);
           result(null, res);
     });
 

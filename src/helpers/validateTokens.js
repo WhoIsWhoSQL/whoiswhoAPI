@@ -5,9 +5,9 @@ function validateToken(req, res, next) {//get token from request header
     
     try {
         
-    console.log("validando tokens!");
+    //console.log("validando tokens!");
     const authHeader = req.headers["authorization"];
-    console.log("authHeadar:"+ authHeader);
+    //console.log("authHeadar:"+ authHeader);
     
     const token = authHeader.split(" ")[1]
     //the request header contains the token "Bearer <token>", split the string and use the second value in the split array.
