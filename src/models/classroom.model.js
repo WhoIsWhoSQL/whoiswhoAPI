@@ -135,6 +135,23 @@ Classroom.findById = (id, user, result) => {
     });
 };
 
+Classroom.findByPin = (pin, result) => {
+    console.log("find by pin:" + pin);
+    sql.query(`SELECT * FROM classrooms WHERE pin = '${pin}'`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        if (res.length) {
+            console.log("found classroom: ", res[0]);
+            result(null, res[0]);
+        } else {
+            // not found classroom with the id
+            result({ kind: "not_found" }, null);
+        }
+    });
+};
 
 
 Classroom.remove = (id, teacherId, result) => {

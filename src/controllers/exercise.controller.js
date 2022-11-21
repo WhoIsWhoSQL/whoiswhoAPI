@@ -45,11 +45,11 @@ exports.findOne = (req, res) => {
 
 exports.addexercise = (req, res) => {
 
- // console.log("addexercise:" + JSON.stringify(req.body));
+  console.log("addexercise:" + JSON.stringify(req.body));
   Exercise.getExerciseByClass(req.body.classId, (err, data) => {
 
     let existe = data.filter(ex => ex.exerciseId === req.body.exerciseId);
-  //  console.log("existe:" + JSON.stringify(existe));
+    console.log("existe:" + JSON.stringify(existe));
     if (existe.length < 1) {
       Exercise.addExerciseToClass(req.body.classId, req.body.exerciseId, (err, data) => {
         if (err) {

@@ -103,7 +103,16 @@ exports.join = (req, res) => {
                 message:
                     err.message || "Some error occurred while join the Classroom."
             });
-        else res.send(data);
+        else {
+            Classroom.findByPin(pin, (err, data2) => {
+                if (err)
+                    res.status(500).send({
+                        message:
+                            err.message || "Some error occurred while join the Classroom."
+                    });
+                else res.send(data2);
+            });
+        }   
     });
 
 }
