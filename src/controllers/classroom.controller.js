@@ -122,7 +122,7 @@ exports.join = (req, res) => {
 
 // Delete a classroom with the specified id in the request
 exports.delete = (req, res) => {
-    Classroom.remove(req.params.id, (err, data) => {
+    Classroom.remove(req.params.id,req.user.teacherId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({

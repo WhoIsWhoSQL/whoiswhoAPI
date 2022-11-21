@@ -33,7 +33,7 @@ Game.create = (newGame, result) => {
 //  "UPDATE users SET title = ?, description = ?, published = ? WHERE id = ?",
 //[user.title, user.description, user.published, id],
 Game.getAllOwned= (gameId,result) => {
-    let query = `SELECT * FROM games g WHERE g.classId is null and teacherId= ${gameId} order by g.start_date desc`;
+    let query = `SELECT * FROM games g WHERE g.classId is null and teacherId= ${gameId} order by g.gameId desc`;
   //console.log(query);
   
     sql.query(query, (err, res) => {
