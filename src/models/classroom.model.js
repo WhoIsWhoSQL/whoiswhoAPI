@@ -41,8 +41,8 @@ Classroom.join = (pin, studentId, result) => {
 //  "UPDATE users SET title = ?, description = ?, published = ? WHERE id = ?",
 //[user.title, user.description, user.published, id],
 Classroom.getAllOwned = (teacherId, result) => {
-    let query = "SELECT distinct c.* FROM classrooms c  LEFT JOIN games g on c.classId = g.classId WHERE c.teacherId=?";
-    console.log(query);
+    let query = "SELECT distinct c.* FROM classrooms c  LEFT JOIN games g on c.classId = g.classId WHERE c.teacherId=? order by c.classId desc";
+   // console.log(query);
 
 
     sql.query(query, [teacherId], (err, res) => {
@@ -52,7 +52,7 @@ Classroom.getAllOwned = (teacherId, result) => {
             return;
         }
 
-        console.log("classrooms: ", res);
+     //   console.log("classrooms: ", res);
         result(null, res);
     });
 };
@@ -60,7 +60,7 @@ Classroom.getAllOwned = (teacherId, result) => {
 
 Classroom.getAllClassStudent = (studentId, result) => {
     console.log("class for student:" + studentId);
-    let query = "SELECT * FROM classrooms c INNER JOIN studentsclassroom sc ON sc.classId = c.classId WHERE studentId=?";
+    let query = "SELECT * FROM classrooms c INNER JOIN studentsclassroom sc ON sc.classId = c.classId WHERE studentId=? order by classId desc";
     console.log(query);
 
     sql.query(query, studentId, (err, res) => {
@@ -155,7 +155,7 @@ Classroom.findByPin = (pin, result) => {
 
 
 Classroom.remove = (id, teacherId, result) => {
-    sql.query(`DELETE FROM classroom WHERE classId = ${id} and teacherId = ${teacherId}`, (err, res) => {
+    sql.query(`DELETE FROM classrooms WHERE classId = ${id} and teacherId = ${teacherId}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -168,7 +168,7 @@ Classroom.remove = (id, teacherId, result) => {
             return;
         }
 
-        console.log("deleted games with id: ", id);
+        console.log("deleted class with id: ", id);
         result(null, res);
     });
 };
