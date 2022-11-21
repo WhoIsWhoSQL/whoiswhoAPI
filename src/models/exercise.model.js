@@ -65,10 +65,10 @@ Exercise.findById = (id, result) => {
   };
   
 
-  Exercise.addExerciseToClass = (exerciseId,classId,result) =>{
+  Exercise.addExerciseToClass = (classId,exerciseId,result) =>{
 
 
- //   console.log("addExerciseToClass");
+    console.log("addExerciseToClass");
     sql.query(`INSERT INTO classroomexercise (exerciseId,classId) VALUES (${exerciseId},${classId})`, (err, res) => {
       if (err) {
         console.log("error: ", err);
