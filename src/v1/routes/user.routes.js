@@ -22,8 +22,8 @@ const router = require("express").Router();
  *              - name
  *              - password
  *          example:
- *              email: 'bernat.teacher@whoiswhosql.edu'
- *              password: '54321'
+ *              email: 'teacher@whoiswhosql.edu'
+ *              password: '123'
  * 
  *      Token:
  *          type: object
@@ -83,32 +83,17 @@ router.post("/", users.create);
 router.post("/login", users.login);
 
 
-/**
- * @swagger
- * /api/v1/users:
- *  get:
- *      summary: crea un nuevo usuario
- *      tags: [User]
- *      responses:
- *          200:
- *              description: todos los usuarios
- *              content: 
- *                  application/json:
- *                      schema:
- *                          type: array
- *                          items:
- *                              $ref : '#components/schemas/User'
-*/
-router.get("/", users.findAll);
 
-// Retrieve a single Users with id
-router.get("/:id", users.findOne);
+// router.get("/", users.findAll);
 
-// Update a Users with id
-router.put("/:id", users.update);
+// // Retrieve a single Users with id
+// router.get("/:id", users.findOne);
 
-// Delete a Users with id
-router.delete("/:id", users.delete);
+// // Update a Users with id
+// router.put("/:id", users.update);
+
+// // Delete a Users with id
+// router.delete("/:id", users.delete);
 
 //app.use('/api/users', router);
 
