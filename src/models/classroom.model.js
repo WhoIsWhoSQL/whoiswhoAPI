@@ -60,7 +60,7 @@ Classroom.getAllOwned = (teacherId, result) => {
 
 Classroom.getAllClassStudent = (studentId, result) => {
     console.log("class for student:" + studentId);
-    let query = "SELECT * FROM classrooms c INNER JOIN studentsclassroom sc ON sc.classId = c.classId WHERE studentId=? order by classId desc";
+    let query = "SELECT * FROM classrooms c INNER JOIN studentsclassroom sc ON sc.classId = c.classId WHERE studentId=? order by c.classId desc";
     console.log(query);
 
     sql.query(query, studentId, (err, res) => {
