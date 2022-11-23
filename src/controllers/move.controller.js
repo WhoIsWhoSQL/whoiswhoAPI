@@ -9,8 +9,8 @@ const Move = require("../models/move.model.js");
 
 //obtiene la lista de tiradas de un juego
 exports.getPlayGame = (req, res) => {
-   // console.log("find all my playmoves by pin and user:" + req.user.studentId);
-
+    // console.log("find all my playmoves by pin and user:" + req.user.studentId);
+    console.log("find all my playmoves");
     Game.findByPin(req.params.pin, (err, data) => {
 
         Move.getAll(data.gameId, req.user.studentId, (err, data) => {
@@ -138,3 +138,16 @@ exports.addMove = (req, res) => {
         });
     });
 };
+
+
+exports.search = (req, res) => {
+    console.log("search");
+    Move.search(req.body,req.user.teacherId, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving User."
+            });
+        else res.send(data);
+    });
+}

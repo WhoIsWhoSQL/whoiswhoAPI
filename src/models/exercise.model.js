@@ -100,5 +100,21 @@ Exercise.findById = (id, result) => {
 
   };
 
+  Exercise.getExerciseById = ( id, result ) => {
+
+    sql.query(`SELECT e.ExerciseId ,e.name,e.level,e.description ,e.img_tableDiagram  FROM exercises e 
+    WHERE e.exerciseId  = ${id}`, (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(err, null);
+          return;
+        }
+    
+      
+     //     console.log("found games: ", res);
+          result(null, res);
+    });
+
+  };
 
 module.exports = Exercise;

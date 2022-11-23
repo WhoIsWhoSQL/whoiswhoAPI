@@ -1,4 +1,5 @@
 const sql = require("./db.js");
+const Exercise = require("./exercise.model.js");
 
 // constructor
 const Game = function(game) {
@@ -85,7 +86,7 @@ Game.getAllOwned= (gameId,result) => {
     });
   };
 
-
+//ToDo: devolver tb el ejercicio dentro de la petición para poder mostrar el diagrama.
   Game.findByIdStudent = (id,studentId, result) => {
     sql.query(`SELECT g.* FROM games g INNER JOIN playmoves p on p.gameId=g.gameId WHERe g.gameId = ${id} and studentId=${studentId}`, (err, res) => {
       if (err) {
@@ -96,7 +97,19 @@ Game.getAllOwned= (gameId,result) => {
   
       if (res.length) {
      //   console.log("found user: ", res[0]);
-        result(null, res[0]);
+
+     const myGame = res[0];
+   //  console.log("myGame:", JSON.stringify(myGame));
+     Exercise.getExerciseById(myGame.ExerciseId,(err,exercise)=>{
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      myGame.Exercises = exercise;
+      result(null, myGame);
+
+     });
         return;
       }
   

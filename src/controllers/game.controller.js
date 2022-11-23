@@ -30,7 +30,7 @@ exports.findMyGames = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-   // console.log("find all Exercise ");
+    console.log("find one game id:" + req.params.id);
     if (req.user.isTeacher) {
         Game.findByIdTeacher(req.params.id, req.user.teacherId, (err, data) => {
 
