@@ -107,16 +107,18 @@ Move.getCharacters = (query, game, result) => {
 
 Move.search = (filter,teacherId, result) => {
 
-  var query = `select p.*,u.name,u.email,g.* from playmoves p 
+  var query = `select p.*,u.name,u.email,g.*,c.name as nameClassroom, c.pin as pinClassroom,u.userId from playmoves p 
   inner join students s on s.studentId=p.studentId 
   inner join users u on u.userId=s.userId  
   inner join games g on p.gameId = g.gameId  
   left join classrooms c on g.classId = c.classId 
   WHERE (g.teacherId=${teacherId} or c.teacherId=${teacherId})`;
+
+  console.log("filter:" + JSON.stringify(filter));
   if (filter.gameId && filter.gameId != 0) {
     query += ` AND p.gameId = '${filter.gameId}'`;
   }
-  if (filter.studentId && filter.studentId != 0) {
+  if (filter.userId && filter.userId != 0) {
     query += ` AND u.userId = '${filter.userId}'`;
   }
   if (filter.failed && filter.failed != 0) {
@@ -126,7 +128,7 @@ Move.search = (filter,teacherId, result) => {
     query += ` AND p.result = '${filter.result}'`;
   }
   if (filter.classId && filter.classId != 0) {
-    query += ` AND p.classId = '${filter.classId}'`;
+    query += ` AND g.classId = '${filter.classId}'`;
   }
   if (filter.error && filter.error != 0) {
     query += ` AND p.error = '${filter.error}'`;
@@ -141,7 +143,7 @@ Move.search = (filter,teacherId, result) => {
       return;
     }
     else {
-      console.log("moves: ", res);
+     // console.log("moves: ", res);
       result(null, res);
     }
   });
