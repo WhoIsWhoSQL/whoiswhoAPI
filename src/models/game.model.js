@@ -183,7 +183,7 @@ Game.getResults= (gameId,result) => {
   inner join users u on u.userId=s.userId 
   where gameId=${gameId} and failed=1 and result=0
   group by u.userId,u.name,u.email) as t3 on t3.userId=t1.userId
-  order by result,numtiradasOK,numtiradasOK+t3.numTiradas,date, t2.numTiradas
+  order by result,TiradasVerdes+TiradasAmarillas, TiradasRojas,date
   `;
 //console.log(query);
 
